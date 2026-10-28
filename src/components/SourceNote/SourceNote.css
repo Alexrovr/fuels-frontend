@@ -1,0 +1,16 @@
+.sourceNote {
+  margin: 0 0 10px;
+  font-size: 11px;
+  color: var(--heat-muted);
+}
+
+.sourceNoteOverlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  margin: 0;
+  padding: 3px 6px;
+  background: rgba(33, 33, 33, 0.6);
+  color: #E7E7E7;
+}

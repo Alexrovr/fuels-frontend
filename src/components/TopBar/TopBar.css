@@ -1,0 +1,28 @@
+.topBar {
+  display: flex;
+  flex: 0 0 var(--heat-topbar-height);
+  align-items: center;
+  justify-content: space-between;
+  height: var(--heat-topbar-height);
+  padding: 0 12px;
+  border-bottom: 1px solid var(--heat-border);
+  background: var(--heat-white);
+}
+
+.topBarLogo {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: var(--heat-dark);
+  text-transform: uppercase;
+}
+
+.topBarLogoAccent {
+  color: var(--heat-accent);
+}
+
+.topBarPage {
+  font-size: 11px;
+  color: var(--heat-muted);
+  text-transform: uppercase;
+}

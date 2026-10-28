@@ -1,0 +1,58 @@
+.fuelCard {
+  height: 100%;
+  border-color: var(--heat-border);
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.fuelCard:hover {
+  border-color: var(--heat-accent);
+  box-shadow: 0 0 0 1px var(--heat-accent);
+}
+
+.fuelCardImage {
+  display: block;
+  height: 132px;
+  object-fit: cover;
+  background: var(--heat-border);
+}
+
+.fuelCardBody {
+  padding: 8px;
+}
+
+.fuelCardName {
+  margin: 0 0 3px;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+
+.fuelCard:hover .fuelCardName {
+  color: var(--heat-accent);
+}
+
+.fuelCardHeat {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--heat-value);
+}
+
+.fuelCardUnit {
+  font-size: 10px;
+  font-weight: normal;
+  color: var(--heat-muted);
+}
+
+.fuelCardLikes {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--heat-muted);
+}
+
+.fuelCardLikesIcon {
+  color: var(--heat-accent);
+}

@@ -1,0 +1,47 @@
+/* Палитра и шрифт — те же, что у SSR-страниц ЛР1–ЛР2 (стиль antonio-merloni.ru) */
+:root {
+  --heat-accent: #FD2B06;
+  --heat-dark: #212121;
+  --heat-white: #FFFFFF;
+  --heat-value: #D93518;
+  --heat-border: #EEEEEE;
+  --heat-muted: #555555;
+  --heat-tabbar-height: 62px;
+  --heat-topbar-height: 46px;
+
+  /* Переопределение переменных Bootstrap: прямые углы, свой шрифт и акцент */
+  --bs-border-radius: 0;
+  --bs-border-radius-sm: 0;
+  --bs-border-radius-lg: 0;
+  --bs-body-font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  --bs-body-font-size: 13px;
+  --bs-body-color: var(--heat-dark);
+  --bs-link-color-rgb: 253, 43, 6;
+}
+
+body {
+  margin: 0;
+  background: #828384;
+}
+
+/* Кнопка в фирменном стиле: <Button variant="heat"> даёт класс btn-heat */
+.btn-heat {
+  --bs-btn-color: var(--heat-white);
+  --bs-btn-bg: var(--heat-accent);
+  --bs-btn-border-color: var(--heat-accent);
+  --bs-btn-hover-color: var(--heat-accent);
+  --bs-btn-hover-bg: var(--heat-white);
+  --bs-btn-hover-border-color: var(--heat-accent);
+  --bs-btn-active-color: var(--heat-accent);
+  --bs-btn-active-bg: var(--heat-white);
+  --bs-btn-active-border-color: var(--heat-accent);
+  --bs-btn-disabled-color: var(--heat-white);
+  --bs-btn-disabled-bg: var(--heat-accent);
+  --bs-btn-disabled-border-color: var(--heat-accent);
+  --bs-btn-focus-shadow-rgb: 253, 43, 6;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}

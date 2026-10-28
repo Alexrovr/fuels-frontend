@@ -1,0 +1,48 @@
+.tabBar {
+  display: flex;
+  flex: 0 0 var(--heat-tabbar-height);
+  flex-wrap: nowrap;
+  height: var(--heat-tabbar-height);
+  border-top: 1px solid var(--heat-border);
+  background: var(--heat-white);
+}
+
+.tabBar .tabBarItem {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 0;
+  border-top: 3px solid transparent;
+  color: var(--heat-dark);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tabBar .tabBarItem:hover,
+.tabBar .tabBarItem:focus {
+  color: var(--heat-accent);
+}
+
+.tabBar .tabBarItem.active {
+  border-top-color: var(--heat-accent);
+  color: var(--heat-accent);
+}
+
+/* Недоступные гостю пункты: серые, без наведения и кликов (класс disabled от Bootstrap) */
+.tabBar .tabBarItem.disabled {
+  color: #BBBBBB;
+}
+
+.tabBarIcon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.tabBarLabel {
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}

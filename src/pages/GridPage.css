@@ -1,0 +1,16 @@
+.gridPage {
+  padding: 12px;
+}
+
+.gridLoader {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  color: var(--heat-accent);
+}
+
+.gridEmpty {
+  padding: 24px 8px;
+  color: var(--heat-muted);
+  text-align: center;
+}
