@@ -1,64 +1,54 @@
 import './FeedPage.css'
 import { type FC, useEffect, useState } from 'react'
-import { Button, Spinner } from 'react-bootstrap'
+import { Alert, Button } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
-import { type FuelDetail, getFeedFuel } from '../modules/fuelsApi'
 import { fallbackToDefaultVideo, imageOrDefault, videoOrDefault } from '../modules/media'
 import { SourceNote } from '../components/SourceNote/SourceNote'
 import { ROUTES } from '../Routes'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { getFeedFuel, likeFuel } from '../store/feedSlice'
 
 // Лента: одна карточка на весь экран поверх видео (как SSR-страница /fuel_feed).
 // /feed — первая карточка, /feed/:id — выбранная в плитке.
 export const FeedPage: FC = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-
-  const [fuel, setFuel] = useState<FuelDetail | null>(null)
-  const [fromMock, setFromMock] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const dispatch = useAppDispatch()
+  const { fuel, loaded, fromMock, loading, liking, error } = useAppSelector((state) => state.feed)
+  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated)
   const [noteOpen, setNoteOpen] = useState(false) // «Больше» / «Меньше» у описания
 
-  // Загрузка карточки при открытии страницы и при смене :id в адресе
+  // Загрузка карточки при открытии страницы, смене :id в адресе и входе/выходе
+  // (от пользователя зависит is_liked)
   useEffect(() => {
     // карточку уже загрузила кнопка «Следующий» — повторный запрос не нужен
     if (fuel && String(fuel.fuel_id) === id) return
-
-    let ignore = false
-    setLoading(true)
-
-    getFeedFuel(id).then((result) => {
-      if (ignore) return
-      setFuel(result.data)
-      setFromMock(result.fromMock)
-      setLoading(false)
-    })
-
-    return () => {
-      ignore = true
-    }
+    dispatch(getFeedFuel({ id: id === undefined ? undefined : Number(id) }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [dispatch, id, isAuthenticated])
 
   // «Следующий»: GET /api/fuels/feed/:id?next=true (по кругу), затем адрес /feed/<ид следующей>
   const handleNext = async () => {
     if (!fuel) return
-    setLoading(true)
-    const result = await getFeedFuel(fuel.fuel_id, true)
-    setFuel(result.data)
-    setFromMock(result.fromMock)
+    const result = await dispatch(getFeedFuel({ id: fuel.fuel_id, next: true }))
     setNoteOpen(false)
-    setLoading(false)
-    if (result.data) navigate(`${ROUTES.FEED}/${result.data.fuel_id}`)
+    if (getFeedFuel.fulfilled.match(result) && result.payload.fuel) {
+      navigate(`${ROUTES.FEED}/${result.payload.fuel.fuel_id}`)
+    }
+  }
+
+  // Лайк: поставить, если ещё не стоит, иначе снять
+  const handleLike = () => {
+    if (fuel) dispatch(likeFuel({ fuelId: fuel.fuel_id, like: fuel.is_liked ? 0 : 1 }))
   }
 
   if (!fuel) {
     return (
       <section className="feedEmpty">
-        {loading ? (
-          <Spinner animation="border" />
-        ) : (
+        {error && <Alert variant="danger">{error}</Alert>}
+        {loaded && !loading && (
           <>
-            <p className="feedEmptyText">Такого вида топлива нет в справочнике</p>
+            {!error && <p className="feedEmptyText">Такого вида топлива нет в справочнике</p>}
             <Button variant="heat" onClick={() => navigate(ROUTES.GRID)}>
               Вернуться к плитке
             </Button>
@@ -85,6 +75,11 @@ export const FeedPage: FC = () => {
 
       <div className="feedShade" />
       {fromMock && <SourceNote overlay />}
+      {error && (
+        <Alert variant="danger" className="feedError">
+          {error}
+        </Alert>
+      )}
 
       <div className="feedOverlay">
         <div className="feedBottom">
@@ -113,10 +108,23 @@ export const FeedPage: FC = () => {
             </div>
           </dl>
 
-          <span className="feedLikes" title="Количество лайков. Поставить лайк можно после входа">
-            <span className="feedLikesIcon">&#10084;</span>
-            {fuel.likes_count}
-          </span>
+          {isAuthenticated && !fromMock ? (
+            <button
+              type="button"
+              className={`feedLikes feedLikeButton ${fuel.is_liked ? 'feedLiked' : ''}`}
+              onClick={handleLike}
+              disabled={liking}
+              title={fuel.is_liked ? 'Убрать лайк' : 'Поставить лайк'}
+            >
+              <span className="feedLikesIcon">{fuel.is_liked ? '❤' : '♡'}</span>
+              {fuel.likes_count}
+            </button>
+          ) : (
+            <span className="feedLikes" title="Количество лайков. Поставить лайк можно после входа">
+              <span className="feedLikesIcon">&#10084;</span>
+              {fuel.likes_count}
+            </span>
+          )}
 
           <Button variant="heat" className="feedNext" onClick={handleNext} disabled={loading}>
             Следующий

@@ -35,6 +35,13 @@
   color: #BBBBBB;
 }
 
+/* «Выход» — кнопка, а не ссылка: убираем рамку и фон браузера */
+.tabBar .tabBarButton {
+  border: 0;
+  border-top: 3px solid transparent;
+  background: none;
+}
+
 .tabBarIcon {
   font-size: 17px;
   line-height: 1;

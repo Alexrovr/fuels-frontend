@@ -168,3 +168,33 @@
 .feedEmptyText {
   margin: 0;
 }
+
+/* Лайк пользователя — кнопка: пустое сердце ♡ — не лайкнуто, закрашенное ❤ — лайкнуто */
+.feedLikeButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.feedLikeButton .feedLikesIcon {
+  transition: transform 0.15s;
+}
+
+.feedLikeButton:hover .feedLikesIcon {
+  transform: scale(1.15);
+}
+
+.feedLiked .feedLikesIcon {
+  color: var(--heat-accent);
+}
+
+.feedError {
+  position: absolute;
+  top: 40px;
+  left: 12px;
+  right: 12px;
+  z-index: 3;
+  padding: 6px 10px;
+}

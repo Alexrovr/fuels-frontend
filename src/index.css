@@ -45,3 +45,59 @@ body {
   text-transform: uppercase;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
+
+/* Второстепенная кнопка: <Button variant="outline-heat"> — белая с акцентной рамкой */
+.btn-outline-heat {
+  --bs-btn-color: var(--heat-accent);
+  --bs-btn-bg: var(--heat-white);
+  --bs-btn-border-color: var(--heat-accent);
+  --bs-btn-hover-color: var(--heat-white);
+  --bs-btn-hover-bg: var(--heat-accent);
+  --bs-btn-hover-border-color: var(--heat-accent);
+  --bs-btn-active-color: var(--heat-white);
+  --bs-btn-active-bg: var(--heat-accent);
+  --bs-btn-active-border-color: var(--heat-accent);
+  --bs-btn-disabled-color: var(--heat-accent);
+  --bs-btn-disabled-bg: var(--heat-white);
+  --bs-btn-disabled-border-color: var(--heat-accent);
+  --bs-btn-focus-shadow-rgb: 253, 43, 6;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+/* Формы страниц входа и добавления */
+.heatForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 12px;
+}
+
+.heatForm .form-label {
+  margin-bottom: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.heatForm .form-control:focus {
+  border-color: var(--heat-accent);
+  box-shadow: 0 0 0 1px var(--heat-accent);
+}
+
+.heatFormTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.heatFormHint {
+  margin: 0;
+  color: var(--heat-muted);
+}

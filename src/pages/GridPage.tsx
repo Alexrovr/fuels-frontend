@@ -1,73 +1,78 @@
 import './GridPage.css'
 import { type FC, useEffect, useState } from 'react'
-import { Col, Row, Spinner } from 'react-bootstrap'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { type FuelListItem, getFuels } from '../modules/fuelsApi'
+import { Alert, Col, Row } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 import { HeatFilter } from '../components/HeatFilter/HeatFilter'
 import { FuelCard } from '../components/FuelCard/FuelCard'
 import { SourceNote } from '../components/SourceNote/SourceNote'
 import { ROUTES } from '../Routes'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { deleteFuel, getFuelsList, setMinHeat } from '../store/fuelsSlice'
 
 // Плитка: фильтр по теплоте сгорания и карточки в два столбца.
-// Применённый фильтр хранится в адресе (/grid?min_heat=50000), как в SSR-версии,
-// поэтому он переживает перезагрузку страницы и кнопку «Назад».
+// Применённый фильтр хранится в Redux (fuels.minHeat), поэтому сохраняется при переходах
+// между страницами и сбрасывается при выходе пользователя.
 export const GridPage: FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const appliedMinHeat = Number(searchParams.get('min_heat')) || 0
-
-  const [minHeat, setMinHeat] = useState(appliedMinHeat) // положение слайдера до нажатия «Найти»
-  const [fuels, setFuels] = useState<FuelListItem[]>([])
-  const [fromMock, setFromMock] = useState(false)
-  // для какого фильтра загружены карточки; пока ответа нет — показываем спиннер
-  const [loadedMinHeat, setLoadedMinHeat] = useState<number | null>(null)
-  const loading = loadedMinHeat !== appliedMinHeat
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { minHeat, list, fromMock, loading, deletingId, error } = useAppSelector((state) => state.fuels)
+  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated)
 
-  // Загрузка карточек при открытии страницы и при каждом изменении фильтра в адресе.
-  // ignore защищает от ответа, пришедшего после ухода со страницы
-  // или после более нового запроса.
+  // положение слайдера до нажатия «Найти»; при сбросе фильтра в Redux возвращается к нему
+  const [sliderValue, setSliderValue] = useState(minHeat)
+  const [syncedMinHeat, setSyncedMinHeat] = useState(minHeat)
+  if (syncedMinHeat !== minHeat) {
+    setSyncedMinHeat(minHeat)
+    setSliderValue(minHeat)
+  }
+
+  // Загрузка карточек: при открытии страницы, при новом фильтре и при входе/выходе
+  // (у пользователя в ответе отмечены свои карточки — is_mine)
   useEffect(() => {
-    let ignore = false
+    dispatch(getFuelsList())
+  }, [dispatch, minHeat, isAuthenticated])
 
-    getFuels(appliedMinHeat).then((result) => {
-      if (ignore) return
-      setFuels(result.data)
-      setFromMock(result.fromMock)
-      setLoadedMinHeat(appliedMinHeat)
-    })
-
-    return () => {
-      ignore = true
-    }
-  }, [appliedMinHeat])
-
-  const handleSearch = () => {
-    setSearchParams(minHeat > 0 ? { min_heat: String(minHeat) } : {})
+  const handleDelete = (fuelId: number, fuelName: string) => {
+    if (window.confirm(`Удалить «${fuelName}»?`)) dispatch(deleteFuel(fuelId))
   }
 
   return (
     <div className="gridPage">
-      <HeatFilter value={minHeat} setValue={setMinHeat} onSubmit={handleSearch} loading={loading} />
+      <HeatFilter
+        value={sliderValue}
+        setValue={setSliderValue}
+        onSubmit={() => dispatch(setMinHeat(sliderValue))}
+        loading={loading}
+      />
 
       {fromMock && <SourceNote />}
+      {error && <Alert variant="danger">{error}</Alert>}
 
-      {loading ? (
-        <div className="gridLoader">
-          <Spinner animation="border" />
-        </div>
-      ) : fuels.length ? (
+      {list.length ? (
         <Row xs={2} className="g-2">
-          {fuels.map((fuel) => (
+          {list.map((fuel) => (
             <Col key={fuel.fuel_id}>
-              <FuelCard fuel={fuel} onClick={() => navigate(`${ROUTES.FEED}/${fuel.fuel_id}`)} />
+              <FuelCard
+                fuel={fuel}
+                onClick={() => navigate(`${ROUTES.FEED}/${fuel.fuel_id}`)}
+                onDelete={
+                  isAuthenticated && fuel.is_mine
+                    ? () => handleDelete(fuel.fuel_id, fuel.fuel_name)
+                    : undefined
+                }
+                disabled={deletingId !== null}
+              />
             </Col>
           ))}
         </Row>
       ) : (
-        <p className="gridEmpty">
-          Нет видов топлива с теплотой сгорания от {appliedMinHeat.toLocaleString('ru-RU')} кДж/м³.
-          Уменьшите значение фильтра.
-        </p>
+        !loading &&
+        !error && (
+          <p className="gridEmpty">
+            Нет видов топлива с теплотой сгорания от {minHeat.toLocaleString('ru-RU')} кДж/м³.
+            Уменьшите значение фильтра.
+          </p>
+        )
       )}
     </div>
   )

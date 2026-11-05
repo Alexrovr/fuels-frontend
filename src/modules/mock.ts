@@ -1,4 +1,4 @@
-import type { FuelDetail } from './fuelsApi'
+import type { FuelDetail } from './types'
 
 // Mock работает без БД и без S3: изображения и видео — копии объектов
 // из бакета Minio, лежат в public/mock/ самого проекта.

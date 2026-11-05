@@ -22,7 +22,22 @@
 }
 
 .topBarPage {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 11px;
   color: var(--heat-muted);
   text-transform: uppercase;
+}
+
+.topBarUser {
+  padding: 2px 6px;
+  border: 1px solid var(--heat-border);
+  font-weight: bold;
+  text-transform: none;
+}
+
+.topBarUserIn {
+  border-color: var(--heat-accent);
+  color: var(--heat-accent);
 }
