@@ -46,6 +46,13 @@ const CreateStep: FC<{ disabled: boolean }> = ({ disabled }) => {
   const [name, setName] = useState('')
   const [image, setImage] = useState<File | null>(null)
   const [video, setVideo] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState('')
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview) URL.revokeObjectURL(imagePreview)
+    }
+  }, [imagePreview])
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
@@ -74,9 +81,20 @@ const CreateStep: FC<{ disabled: boolean }> = ({ disabled }) => {
         <Form.Control
           type="file"
           accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml"
-          onChange={(event) => setImage((event.target as HTMLInputElement).files?.[0] ?? null)}
+          onChange={(event) => {
+            const file = (event.target as HTMLInputElement).files?.[0] ?? null
+            setImage(file)
+            setImagePreview(file ? URL.createObjectURL(file) : '')
+          }}
           required
         />
+        {imagePreview && (
+          <img
+            className="draftImage draftImagePreview"
+            src={imagePreview}
+            alt="Предпросмотр выбранного изображения"
+          />
+        )}
       </Form.Group>
 
       <Form.Group controlId="video">

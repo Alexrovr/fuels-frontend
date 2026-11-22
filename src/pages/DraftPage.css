@@ -19,3 +19,9 @@
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+
+.draftImagePreview {
+  height: 200px;
+  margin-top: 10px;
+  object-fit: contain;
+}
