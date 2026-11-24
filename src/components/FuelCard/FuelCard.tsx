@@ -31,7 +31,6 @@ export const FuelCard: FC<Props> = ({ fuel, onClick, onDelete, disabled }) => (
         <span className="fuelCardLikes" title="Количество лайков">
           <span className="fuelCardLikesIcon">&#10084;</span> {fuel.likes_count}
         </span>
-        <Button variant="outline-heat" size="sm" onClick={(event) => { event.stopPropagation(); onClick() }}>Подробнее</Button>
         {onDelete && (
           <Button
             variant="outline-heat"
