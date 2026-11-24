@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AppLayout } from './AppLayout'
 import { ROUTES } from './Routes'
 import { FeedPage } from './pages/FeedPage'
@@ -8,7 +8,7 @@ import { LoginPage } from './pages/LoginPage'
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         {/* Общая оболочка «телефона»: верхняя панель, страница, нижняя таб-панель */}
         <Route element={<AppLayout />}>
@@ -21,7 +21,7 @@ function App() {
           <Route path="*" element={<Navigate to={ROUTES.GRID} replace />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

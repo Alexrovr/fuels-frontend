@@ -2,8 +2,8 @@ import type { SyntheticEvent } from 'react'
 
 // Медиа по умолчанию лежат в public/ самого фронтенда и отдаются dev-сервером
 // по корневому пути — бэкенд для них не нужен.
-export const DEFAULT_IMAGE = '/DefaultImage.svg'
-export const DEFAULT_VIDEO = '/DefaultVideo.mp4'
+export const DEFAULT_IMAGE = `${import.meta.env.BASE_URL}DefaultImage.svg`
+export const DEFAULT_VIDEO = `${import.meta.env.BASE_URL}DefaultVideo.mp4`
 
 // Второй маршрут прокси (vite.config.ts): /minio/* → http://localhost:9000/* — S3 (Minio).
 export const MINIO_PROXY_PREFIX = '/minio'

@@ -1,3 +1,4 @@
+import { MOCK_ONLY } from '../modules/config'
 import { type FC, type FormEvent, useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap'
 import { Navigate, useNavigate } from 'react-router-dom'
@@ -16,6 +17,8 @@ export const LoginPage: FC = () => {
   const { isAuthenticated, loading, error } = useAppSelector((state) => state.user)
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
+
+  if (MOCK_ONLY) return <Alert variant="info" className="m-3">GitHub Pages работает с mock. Для входа откройте HTTPS-адрес ноутбука.</Alert>
 
   if (isAuthenticated) return <Navigate to={ROUTES.GRID} replace />
 

@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local TLS secrets and deployment staging
+certs/
+.pages-deploy/
+*.key
+*.pem

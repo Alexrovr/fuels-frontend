@@ -1,3 +1,4 @@
+import { registerSW } from 'virtual:pwa-register'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
@@ -14,3 +15,7 @@ createRoot(document.getElementById('root')!).render(
     </Provider>
   </StrictMode>,
 )
+
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  registerSW({ immediate: true })
+}

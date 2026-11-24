@@ -1,3 +1,4 @@
+import { MOCK_ONLY } from '../modules/config'
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { api } from '../api'
 import { errorMessage, isServiceDown } from '../api/errors'
@@ -33,6 +34,7 @@ export const getFuelsList = createAppAsyncThunk(
   'fuels/getFuelsList',
   async (_, { getState, rejectWithValue }) => {
     const { fuels, user } = getState()
+    if (MOCK_ONLY) return { list: mockFuelsList(fuels.minHeat), fromMock: true }
     try {
       const { data } = await api.fuels.fuelsList(fuels.minHeat > 0 ? { min_heat: fuels.minHeat } : {})
       return { list: data as FuelListItem[], fromMock: false }

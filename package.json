@@ -8,7 +8,12 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "generate-api": "node scripts/generate-api.mjs"
+    "generate-api": "node scripts/generate-api.mjs",
+    "build:pages": "tsc -b && vite build --mode pages",
+    "dev:https": "vite --mode local-https",
+    "preview:https": "vite preview --mode local-https",
+    "certs": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/create-certs.ps1",
+    "deploy": "npm run build:pages && node scripts/deploy-pages.mjs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.14.0",
@@ -28,6 +33,7 @@
     "oxlint": "^1.88.0",
     "swagger-typescript-api": "^13.13.0",
     "typescript": "~6.0.3",
-    "vite": "^8.3.4"
+    "vite": "^8.3.4",
+    "vite-plugin-pwa": "^2.0.0"
   }
 }

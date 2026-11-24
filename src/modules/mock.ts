@@ -2,7 +2,7 @@ import type { FuelDetail } from './types'
 
 // Mock работает без БД и без S3: изображения и видео — копии объектов
 // из бакета Minio, лежат в public/mock/ самого проекта.
-const MEDIA = '/mock'
+const MEDIA = `${import.meta.env.BASE_URL}mock`
 
 // Mock-коллекция видов топлива. Формат совпадает с ответом веб-сервиса,
 // поэтому страницы не различают, откуда пришли данные.

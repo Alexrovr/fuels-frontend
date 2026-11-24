@@ -101,3 +101,9 @@ body {
   margin: 0;
   color: var(--heat-muted);
 }
+
+.heatForm { width: 100%; max-width: 420px; margin-inline: auto; }
+.form-control { min-width: 0; font-size: 16px; }
+.btn { min-height: 40px; }
+.topBar { padding-top: env(safe-area-inset-top); height: auto; min-height: 46px; flex-basis: auto; }
+.tabBar { height: auto; min-height: 62px; padding-bottom: env(safe-area-inset-bottom); flex-basis: auto; }

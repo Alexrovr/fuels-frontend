@@ -1,3 +1,4 @@
+import { MOCK_ONLY } from '../../modules/config'
 import './SourceNote.css'
 import type { FC } from 'react'
 import { Badge } from 'react-bootstrap'
@@ -9,6 +10,6 @@ interface Props {
 // Пометка, что веб-сервис не ответил и карточки взяты из mock-коллекции
 export const SourceNote: FC<Props> = ({ overlay }) => (
   <div className={`sourceNote ${overlay ? 'sourceNoteOverlay' : ''}`}>
-    <Badge bg="dark">mock</Badge> веб-сервис недоступен, показаны mock-данные
+    <Badge bg="dark">mock</Badge> {MOCK_ONLY ? 'демонстрационная версия GitHub Pages' : 'веб-сервис недоступен, показаны mock-данные'}
   </div>
 )

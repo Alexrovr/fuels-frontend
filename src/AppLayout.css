@@ -11,7 +11,8 @@
   overflow: hidden;
 }
 
-@media (min-width: 460px) {
+/* На ноутбуке сохраняем компактное окно из предыдущей лабораторной. */
+@media (min-width: 460px) and (min-height: 560px) {
   .appShell {
     height: 860px;
     max-height: calc(100dvh - 48px);

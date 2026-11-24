@@ -198,3 +198,11 @@
   z-index: 3;
   padding: 6px 10px;
 }
+
+.feedOverlay { max-height: 75%; overflow-y: auto; }
+@media (max-height: 500px) {
+  .feedOverlay { max-height: 100%; padding: 8px 12px; }
+  .feedSide { flex-basis: 145px; gap: 4px; }
+  .feedFacts { display: flex; gap: 10px; margin-bottom: 4px; }
+  .feedNoteOpen { max-height: 90px; }
+}

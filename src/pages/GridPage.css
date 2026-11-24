@@ -14,3 +14,16 @@
   color: var(--heat-muted);
   text-align: center;
 }
+
+/* На узких телефонах одна колонка, от 360px — две.
+   Окно приложения не шире 420px: на ноутбуке плитка остаётся компактной.
+   При ширине телефона 390px: (390 - 24 padding - 8 gap) / 2 = 179px. */
+.fuelGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+.fuelGrid > div { min-width: 0; }
+@media (min-width: 360px) {
+  .fuelGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

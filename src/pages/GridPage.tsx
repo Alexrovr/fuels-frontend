@@ -1,6 +1,6 @@
 import './GridPage.css'
 import { type FC, useEffect, useState } from 'react'
-import { Alert, Col, Row } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { HeatFilter } from '../components/HeatFilter/HeatFilter'
 import { FuelCard } from '../components/FuelCard/FuelCard'
@@ -9,7 +9,7 @@ import { ROUTES } from '../Routes'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { deleteFuel, getFuelsList, setMinHeat } from '../store/fuelsSlice'
 
-// Плитка: фильтр по теплоте сгорания и карточки в два столбца.
+// Плитка: фильтр по теплоте сгорания и адаптивная сетка карточек.
 // Применённый фильтр хранится в Redux (fuels.minHeat), поэтому сохраняется при переходах
 // между страницами и сбрасывается при выходе пользователя.
 export const GridPage: FC = () => {
@@ -49,9 +49,9 @@ export const GridPage: FC = () => {
       {error && <Alert variant="danger">{error}</Alert>}
 
       {list.length ? (
-        <Row xs={2} className="g-2">
+        <div className="fuelGrid">
           {list.map((fuel) => (
-            <Col key={fuel.fuel_id}>
+            <div key={fuel.fuel_id}>
               <FuelCard
                 fuel={fuel}
                 onClick={() => navigate(`${ROUTES.FEED}/${fuel.fuel_id}`)}
@@ -62,9 +62,9 @@ export const GridPage: FC = () => {
                 }
                 disabled={deletingId !== null}
               />
-            </Col>
+            </div>
           ))}
-        </Row>
+        </div>
       ) : (
         !loading &&
         !error && (

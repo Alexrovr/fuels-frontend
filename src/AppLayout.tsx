@@ -6,7 +6,7 @@ import { TabBar } from './components/TabBar/TabBar'
 import { LoadingOverlay } from './components/LoadingOverlay/LoadingOverlay'
 import { selectIsBusy, useAppSelector } from './store/hooks'
 
-// Макет под вертикальный экран телефона: на компьютере — колонка 420px по центру.
+// Адаптивная оболочка: ширина экрана, максимум 420px.
 // Страница (Outlet) прокручивается внутри, панели сверху и снизу остаются на месте.
 // Пока выполняется любой запрос (thunk или вход/выход), поверх всего — анимация,
 // которая перехватывает нажатия: кнопки страницы и меню недоступны.

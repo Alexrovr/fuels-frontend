@@ -1,3 +1,4 @@
+import { MOCK_ONLY } from '../modules/config'
 import { createSlice } from '@reduxjs/toolkit'
 import { api } from '../api'
 import { errorMessage, httpStatus, isServiceDown } from '../api/errors'
@@ -37,6 +38,7 @@ interface FeedArgs {
 export const getFeedFuel = createAppAsyncThunk(
   'feed/getFeedFuel',
   async ({ id, next = false }: FeedArgs, { getState, rejectWithValue }) => {
+    if (MOCK_ONLY) return { fuel: mockFeedFuel(id, next), fromMock: true }
     try {
       const { data } =
         id === undefined

@@ -1,3 +1,25 @@
+## Лабораторная работа №7
+
+Адаптивность, PWA, GitHub Pages (mock) и HTTPS reverse proxy на Node.js.
+
+```sh
+npm run dev                  # HTTP разработка, API через прокси
+npm run certs -- -IpAddress 192.168.0.16
+npm run dev:https            # HTTPS с телефона, реальный backend
+npm run build:pages          # production PWA с mock для Pages
+npm run deploy               # публикация dist в gh-pages
+npm run build                # production с реальным backend
+npm run preview:https        # HTTPS production PWA на :3000
+```
+
+На ноутбуке сохраняется компактное окно до 420 px. На телефонах уже 360 px плитка показывает одну колонку, от 360 px — две.
+
+GitHub Pages работает только с mock. Для локального HTTPS нужно установить публичный `certs/ca.crt` в доверенные CA устройства; приватные ключи не передавать.
+
+Ниже сохранено описание ЛР6.
+
+---
+
 ## Лабораторная работа №6
 
 SPA на React для **гостя и пользователя**. Услуга курса — вид топлива (метан, пропан-бутан, ацетилен, водород…).
