@@ -33,7 +33,7 @@ export const FuelCard: FC<Props> = ({ fuel, onClick, onDelete, disabled }) => (
         </span>
         {onDelete && (
           <Button
-            variant="outline-heat"
+            variant="heat"
             size="sm"
             className="fuelCardDelete"
             disabled={disabled}

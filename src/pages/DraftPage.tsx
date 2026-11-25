@@ -191,7 +191,7 @@ const PublishStep: FC<{ draft: FuelDetail; disabled: boolean }> = ({ draft, disa
       <Button variant="heat" type="submit" disabled={disabled}>
         Опубликовать
       </Button>
-      <Button variant="outline-heat" type="button" onClick={handleDelete} disabled={disabled}>
+      <Button variant="heat" type="button" onClick={handleDelete} disabled={disabled}>
         Удалить черновик
       </Button>
     </Form>
